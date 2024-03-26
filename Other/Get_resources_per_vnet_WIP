@@ -1,0 +1,22 @@
+# Get resources in Azure Vnet
+
+$sub='PG-NA-External-Prod-02'
+$vnet='AZ-VN-NA-EASTUS2-External_NonProd-05'
+$restype='microsoft.databricks/workspaces'
+
+$subs = Get-AzSubscription
+# $subs
+$allAssignments = @()       # creates an empty array for the variable
+foreach ($sub in $subs) {   # for each subscription from the the subscription list $sub is the newly created variable
+    set-azcontext -Subscription $sub.Name # set a subscription as a context for executing this task
+    $RGs = Get-AzResourceGroup
+#    $RGs
+#    $resourceGroups.ResourceGroupName
+    foreach ($RG in $RGs) {   
+#        $resources = Get-AzResource -ResourceGroupName $RG.ResourceGroupName | Where-Object { $_.ResourceType -eq $restype}
+
+    
+    }
+}
+
+$allAssignments | Export-Csv -Path "./assignments.csv"
