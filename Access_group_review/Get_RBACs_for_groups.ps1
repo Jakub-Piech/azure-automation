@@ -61,7 +61,7 @@ $GroupNames = @(
 'T1G-GTO-AIF-AKS-MT-NonProd-Admins',
 'T1-AzureOpenAIPlaygroud-DEV-Admin'
 )
-Temp/Access_group_review/Get_RBACs_for_groups.ps1 -i $GroupNames
+Access_group_review/Get_RBACs_for_groups.ps1 -i $GroupNames
 
 #>
 [CmdletBinding(DefaultParametersetName = 'default')]
@@ -102,7 +102,7 @@ foreach ($sub in $subs) {   # for each subscription from the the subscription li
 
 end{
     $date = Get-Date -Format "dd_MM_yyyy"
-    $allAssignments | Sort-Object -Property Scope,DisplayName,RoleDefinitionName -Unique | Export-Csv -Path "Temp/Access_group_review/Get_RBACs_for_groups_$date.csv"
+    $allAssignments | Sort-Object -Property Scope,DisplayName,RoleDefinitionName -Unique | Export-Csv -Path "Access_group_review/Get_RBACs_for_groups_$date.csv"
 }
 
 

@@ -1,8 +1,9 @@
 <#
 
 List RBACs that this group directly has
-Preriequisite:
+Prerequisite:
 Install-Module Microsoft.Graph
+& relog
 
 .EXAMPLE
 # :by Group Name
@@ -10,7 +11,7 @@ $GroupNames = @(
 'znalezniak, maciej [Non-PG]',
 'Tier1-znalezniak, maciej'
 )
-Temp/Access_group_review/Get_memberships_of_groups.ps1 -i $GroupNames
+Access_group_review/Get_memberships_of_groups.ps1 -i $GroupNames
 
 #>
 [CmdletBinding(DefaultParametersetName = 'default')]
@@ -41,5 +42,5 @@ process {
 
 end{
     $date = Get-Date -Format "dd_MM_yyyy"
-    $GroupMembers | Export-Csv -Path "Temp/Access_group_review/Get_memberships_of_groups_$date.csv"
+    $GroupMembers | Export-Csv -Path "Access_group_review/Get_memberships_of_groups_$date.csv"
 }
