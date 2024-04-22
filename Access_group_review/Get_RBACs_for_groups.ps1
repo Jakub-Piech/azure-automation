@@ -1,65 +1,13 @@
 <#
 
-List RBACs that this group directly has
+List RBACs that this group directly has. 
+! Watchout for line 42 & 43 - one is for groups and another for users
+.
 
 .EXAMPLE
 # :by Group Name
 $GroupNames = @(
-'IDHG-DXC-AirFlow-Admins',
-'DNS-SelfService-AirflowPlatform',
-'IDHG-All-AirflowPlatform-Admins',
-'ITSG-CSE-EmbeddedEngineers',
-'ITSG-SophieCSE-PG',
-'ITSG-SophieCSE-Ext',
-'ITS-SophieCSE',
-'ITS-Sophie-Users',
-'GITG-askPG-Cloud-admins',
-'GITG-askPG-Cloud-users',
-'GTOG-VICA-ADMINS',
-'ITSG-CSE-ADOUsers-MADS',
-'BIGG-AZRXXX-AD',
-'DNS-SelfService-MLOPS',
-'ITSG-MLOpsAz-Admin',
-'AKS-MLOPSV2-NP08-Admins',
-'JDSG-AIFACTORY-ITS',
-'GDSG-AzureDevOps-Users-DXC-MLOpsAz',
-'GDSG-AzureDevOps-Users-Infosys-MLOpsAz',
-'JDSG-Microsoft-AIFactory',
-'GTOG-AKS-AIF-MT-Continuity-Plan',
-'GTO-MLOpsAz-Operations',
-'GTO-MLOpsAz-EPE',
-'BIG-I-DTIXXX-AD',
-'CDH-CoreDataPlatform-AzNonProdOwner',
-'CDH-CoreDataPlatform-AzReader',
-'CNF-Azure-All-users',
-'IDHG-AirflowAdmins',
-'IDHG-PlatformEngineers',
-'ITSG-DAA-TEAM',
-'GDSG-AzureDevops-User-PG-Airflow',
-'GDSG-AzureDevops-User-DSStream-Airflow',
-'GDS-AzureDevops-Airflow-ITS-DA',
-'IDHG-AirflowPlatform-Admins',
-'IDHG-LTI-AirflowPlatform-Support',
-'IDH-AirflowPlatform-Admins',
-'ITSG-AIF-AKS-MT-Prod-Admins',
-'ITSG-AIF-AKS-MT-Test-Admins',
-'ITSG-MLOpsAz-Operations',
-'T1G-IDHG-PlatformTeam-ExtendedEPE',
-'T1-CDH-CoreDataPlatform-AzReader',
-'T1G-IDHG-PlatformEngineers',
-'T1-CDH-CoreDataPlatform-AzNonProdOwner',
-'T1G-GTO-MLOpsAz-Admin',
-'T1G-GTO-MLOpsAz-Operations',
-'T1G-GTO-AIF-AKS-MT-Prod-Admins',
-'GDSG-AzureDevOps-Users-PG-GTO-CSE',
-'GTOG-AIF-PBIGW-POC',
-'T1-ITSG-MLOpsAz-Operations',
-'T1-ITSG-AIF-AKS-MT-Prod-Admins',
-'T1-ITSG-AIF-AKS-MT-Test-Admins',
-'T1G-LTI-AirflowPlatform-Support',
-'T1G-GTO-AIF-AKS-MT-Dev-Admins',
-'T1G-GTO-AIF-AKS-MT-NonProd-Admins',
-'T1-AzureOpenAIPlaygroud-DEV-Admin'
+'T1G-CDHG-CoreDataHub-Core-Engineers-Admin'
 )
 Access_group_review/Get_RBACs_for_groups.ps1 -i $GroupNames
 
@@ -77,7 +25,8 @@ $allAssignments = @()       # creates an empty array for the variable
 foreach ($sub in $subs) {   # for each subscription from the the subscription list $sub is the newly created variable
     set-azcontext -Subscription $sub.Name # set a subscription as a context for executing this task
     foreach ($GroupName in $GroupNames) {
-        $grId = (Get-AzADGroup -DisplayName $GroupName).Id
+        $grId = (Get-AzADGroup -DisplayName $GroupName).Id     # for groups
+#        $grId = (Get-AzADUser -DisplayName $GroupName).Id       # for people
         $GroupName
         $assignments = Get-AzRoleAssignment -ObjectId $grId
         foreach ($assignment in $assignments) { # output file creation

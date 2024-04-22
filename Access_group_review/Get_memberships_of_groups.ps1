@@ -3,7 +3,11 @@
 List RBACs that this group directly has
 Prerequisite:
 Install-Module Microsoft.Graph
+Install-Module AzureAD
+Install-Module AzureADPreview
+
 & relog
+! Watchout for line 30 & 31 one is for groups and another for users
 
 .EXAMPLE
 # :by Group Name
@@ -26,7 +30,8 @@ process {
     $GroupMembers= @()
 
     foreach ($GroupName in $GroupNames) {
-        $Groups2 = Get-MgGroupTransitiveMemberOf -GroupId (Get-AzADGroup -DisplayName $GroupName).Id
+#        $Groups2 = Get-MgGroupTransitiveMemberOf -GroupId (Get-AzADGroup -DisplayName $GroupName).Id  # for groups
+        $Groups2 = Get-MgUserMemberOf -UserId (Get-AzADUser -DisplayName $GroupName).Id  # for users
         foreach ($Group2 in $Groups2) {
             $Group2name = (Get-AzADGroup -ObjectId $Group2.Id).DisplayName
             $Object = New-Object PSObject
